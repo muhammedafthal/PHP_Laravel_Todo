@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 
+// use function Pest\Laravel\delete;
+
 class TodoController extends Controller
 {
     public function home() {
@@ -12,7 +14,7 @@ class TodoController extends Controller
         //dd($todos);
         return view('home', ['todos' => $todos]);
     }
-    public function add(Request $request) {
+    public function create(Request $request) {
         # In the request parameter we will get what are the data or stuff. Does the user entered.
         //dd($request);
         //dd($request -> post('title'));
@@ -31,9 +33,9 @@ class TodoController extends Controller
         # This is called mass assignment.
         # Creating bulk of data.
         Todo::create($validatedData);
-        $todo = new Todo();
-        $todo ->title = $request -> post('title');
-        $todo -> save();
+        // $todo = new Todo();
+        // $todo ->title = $request -> post('title');
+        // $todo -> save();
       
         return redirect(route('home'));
         //return back();
@@ -68,5 +70,9 @@ class TodoController extends Controller
         # This is another way to update data.
         $id->update($validatedData);
         return redirect(route('home'));
+    }
+    public function delete(Todo $id) {
+        $id->delete();
+        return back();
     }
 }
